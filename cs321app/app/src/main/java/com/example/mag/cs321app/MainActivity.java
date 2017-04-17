@@ -3,35 +3,42 @@ package com.example.mag.cs321app;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.*;
 
 import com.firebase.client.Firebase;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button mSendData;
+    private EditText mValueField;
+    private Button mAddBtn;
 
-    private Firebase mRef;
+    // add reference to Firebase
+    private Firebase mRootRef;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Firebase.setAndroidContext(this);
 
-        mRef = new Firebase("https://cs321app.firebaseio.com/");
+        // create an object
+        mRootRef = new Firebase("https://cs321app.firebaseio.com/Users");
 
-        mSendData = (Button) findViewById(R.id.sendData);
+        mValueField = (EditText) findViewById(R.id.valueField);
+        mAddBtn = (Button) findViewById(R.id.addBtn);
 
-        mSendData.setOnClickListener(new View.OnClickListener() {
+        mAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String value = mValueField.getText().toString();
 
-                Firebase mRefChild = mRef.child("Name");
-                mRefChild.setValue("haha");
+                Firebase childRef = mRootRef.child("Name");
+
+                childRef.setValue(value);
             }
         });
+
+
     }
 }
