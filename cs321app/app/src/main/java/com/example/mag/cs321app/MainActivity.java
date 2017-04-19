@@ -10,35 +10,31 @@ import com.firebase.client.Firebase;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText mValueField;
-    private Button mAddBtn;
+    private EditText mvalueField;
+    private Button maddBtn;
 
-    // add reference to Firebase
-    private Firebase mRootRef;
+    private Firebase mRef;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Firebase.setAndroidContext(this);
 
-        // create an object
-        mRootRef = new Firebase("https://cs321app.firebaseio.com/Users");
+        mRef = new Firebase("https://cs321app.firebaseio.com/Users");
 
-        mValueField = (EditText) findViewById(R.id.valueField);
-        mAddBtn = (Button) findViewById(R.id.addBtn);
+        mvalueField = (EditText) findViewById(R.id.valueField);
+        maddBtn = (Button) findViewById(R.id.addBtn);
 
-        mAddBtn.setOnClickListener(new View.OnClickListener() {
+        maddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String value = mValueField.getText().toString();
 
-                Firebase childRef = mRootRef.child("Name");
-
-                childRef.setValue(value);
+                String value = mvalueField.getText().toString();
+                Firebase mRefChild = mRef.child("Name");
+                mRefChild.setValue(value);
             }
         });
-
-
     }
 }
